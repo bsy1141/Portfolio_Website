@@ -77,7 +77,7 @@ const ProjectDetailEditForm = ({ project, setIsEditing, setProjects }) => {
       <p style={{ backgroundColor: "white" }}>
         {slicingDate(project.fromDate, project.toDate)}
       </p>
-      {project.images && <ProjectDetailCardSlider slides={project.images} />}
+      {/* {project.images && <ProjectDetailCardSlider slides={project.images} />} */}
 
       <Form onSubmit={handleSubmit} style={{ backgroundColor: "white" }}>
         <Form.Group
