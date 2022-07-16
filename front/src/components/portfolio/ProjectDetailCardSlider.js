@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
+//import styled from "styled-components";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
@@ -7,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ProjectDetailCardSlider = ({ slides }) => {
+  console.log(slides[0].saveFilePath);
   const [currentSlide, setCurrentSlide] = useState(0);
   const slideRef = useRef(null);
 
@@ -23,68 +25,31 @@ const ProjectDetailCardSlider = ({ slides }) => {
     }
   };
   return (
-    <Container>
-      <SliderContainer ref={slideRef}>
+    <div className="slider_container">
+      <div className="slider_wrapper" ref={slideRef}>
         {slides.map((slide, idx) => (
-          <Slide key={idx} src={slide.saveFilePath} />
+          <img
+            className="slider_slide"
+            key={idx}
+            src={slide.saveFilePath}
+            alt="slide_image"
+          />
         ))}
-      </SliderContainer>
-      <PrevBtn onClick={() => handleSlide("prev")}>
+      </div>
+      <div className="slider_prevBtn" onClick={() => handleSlide("prev")}>
         <FontAwesomeIcon
           icon={faChevronLeft}
           style={{ background: "transparent" }}
         />
-      </PrevBtn>
-      <NextBtn onClick={() => handleSlide("next")}>
+      </div>
+      <div className="slider_nextBtn" onClick={() => handleSlide("next")}>
         <FontAwesomeIcon
           icon={faChevronRight}
           style={{ background: "transparent" }}
         />
-      </NextBtn>
-    </Container>
+      </div>
+    </div>
   );
 };
 
 export default ProjectDetailCardSlider;
-
-const Container = styled.div`
-  width: 500px;
-  margin: auto;
-  height: 500px;
-  position: relative;
-  overflow: hidden;
-`;
-
-const SliderContainer = styled.div`
-  width: 500px;
-  height: 500px;
-  margin: auto;
-  display: flex;
-`;
-
-const Slide = styled.img`
-  width: 500px;
-  height: 500px;
-`;
-
-const PrevBtn = styled.div`
-  position: absolute;
-  top: 220px;
-  left: 10px;
-  border: none;
-  color: white;
-  font-size: 50px;
-  background: transparent;
-  cursor: pointer;
-`;
-
-const NextBtn = styled.div`
-  position: absolute;
-  top: 220px;
-  right: 10px;
-  border: none;
-  color: white;
-  font-size: 50px;
-  background: transparent;
-  cursor: pointer;
-`;

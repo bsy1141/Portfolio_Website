@@ -13,3 +13,47 @@ button#tabs-tab-gallery.active {
 label.form-check-label {
   background-color: #c4e0f9;
 }
+
+/*project detail*/
+
+.slider_container {
+  width: 500px;
+  margin: auto;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slider_wrapper {
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  display: flex;
+}
+
+.slider_slide {
+  width: 500px;
+  height: 500px;
+}
+
+.slider_prevBtn {
+  position: absolute;
+  top: 220px;
+  left: 10px;
+  border: none;
+  color: white;
+  font-size: 50px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.slider_nextBtn {
+  position: absolute;
+  top: 220px;
+  right: 10px;
+  border: none;
+  color: white;
+  font-size: 50px;
+  background: transparent;
+  cursor: pointer;
+}

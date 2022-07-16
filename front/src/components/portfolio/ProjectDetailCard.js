@@ -45,7 +45,9 @@ const ProjectDetailCard = ({
       className="mb-4"
       style={{ backgroundColor: "white", borderRadius: "10px" }}
     >
-      {/* {project.images && <ProjectDetailCardSlider slides={project.images} />} */}
+      {project.images.length !== 0 && (
+        <ProjectDetailCardSlider slides={project.images} />
+      )}
       <h4
         style={{
           display: "inline",
