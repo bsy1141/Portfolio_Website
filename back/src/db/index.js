@@ -8,6 +8,7 @@ import { Comment } from "./models/Comment";
 import { Reply } from "./models/Reply";
 import { Auth } from "./models/Auth";
 import { Gallery } from "./models/Gallery";
+import { Portfolio } from "./models/Portfolio";
 
 const DB_URL =
   process.env.MONGODB_URL ||
@@ -33,3 +34,4 @@ export { Comment };
 export { Reply };
 export { Auth };
 export { Gallery };
+export { Portfolio };

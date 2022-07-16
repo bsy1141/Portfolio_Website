@@ -1,4 +1,4 @@
-import { User, Award, Certificate, Education, Project, Comment, Reply, Auth, db } from "../db";
+import { User, Award, Certificate, Education, Project, Comment, Reply, Auth, db, Gallery, Portfolio } from "../db";
  // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
@@ -75,6 +75,14 @@ class userAuthService {
 
       if (rResult.error) { throw new Error("Award withdraw Error") };
 
+      const gaResult = Gallery.withdrawByUserId({ userId });
+
+      if (gaResult.error) { throw new Error("Gallery withdraw Error") };
+
+      const poResult = Portfolio.withdrawByUserId({ userId });
+
+      if (poResult.error) { throw new Error("Portfolio withdraw Error") };
+
       session.commitTransaction();
       
       return { status : "success" }
@@ -124,6 +132,12 @@ class userAuthService {
 
       const rResult = await Reply.recoveryByUserId({ userId })
       if (rResult.error) { throw new Error("Award withdraw Error") };
+
+      const gaResult = Gallery.recoveryByUserId({ userId });
+      if (gaResult.error) { throw new Error("Gallery withdraw Error") };
+
+      const poResult = Portfolio.recoveryByUserId({ userId });
+      if (poResult.error) { throw new Error("Portfolio withdraw Error") };
 
 
       session.commitTransaction();
@@ -187,6 +201,12 @@ class userAuthService {
 
       const rResult = await Reply.recoveryByUserId({ userId : user.id })
       if (rResult.error) { throw new Error("Award withdraw Error") };
+
+      const gaResult = Gallery.recoveryByUserId({ userId : user.id });
+      if (gaResult.error) { throw new Error("Gallery withdraw Error") };
+
+      const poResult = Portfolio.recoveryByUserId({ userId : user.id });
+      if (poResult.error) { throw new Error("Portfolio withdraw Error") };
 
       session.commitTransaction();
       return { status : "success" };

@@ -13,6 +13,7 @@ import Awards from "./award/Awards";
 import Certificates from "./certificate/Certificates";
 import Comments from "./comment/Comments";
 import Gallerys from "./gallery/Gallerys";
+import ProjectsDetail from "./portfolio/ProjectsDetail";
 import { RecoilRoot } from "recoil";
 import { useMediaQuery } from "@material-ui/core";
 import "./Components.css";
@@ -111,11 +112,7 @@ function Portfolio() {
               defaultActiveKey={checkedTab}
               onSelect={handleSelect}
             >
-              <Tab
-                eventKey="portfolio"
-                title="Portfolio"
-                tabClassName="coloredTab"
-              >
+              <Tab eventKey="resume" title="Resume" tabClassName="coloredTab">
                 <div className="mb-3">
                   <Projects
                     portfolioOwnerId={portfolioOwner.id}
@@ -140,6 +137,12 @@ function Portfolio() {
                     isEditable={portfolioOwner.id === userState.user?.id}
                   />
                 </div>
+              </Tab>
+              <Tab eventKey="portfolio" title="Portfolio">
+                <ProjectsDetail
+                  portfolioOwnerId={portfolioOwner.id}
+                  isEditable={portfolioOwner.id === userState.user?.id}
+                />
               </Tab>
               <Tab eventKey="comment" title="Comment">
                 <Comments userId={portfolioOwner.id} author={userState.user} />

@@ -19,8 +19,69 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }); // storage에 저장, 이미지 크기는 5MB로 제한
 
 galleryRouter.post(
+  "/portfolio/gallery/:projectId",
+  upload.array("gallery"),
+  async function (req, res, next) {
+    try {
+      // req (request) 에서 데이터 가져오기
+      const { projectId } = req.params;
+      // req.file 은 `gallery` 라는 필드의 파일 정보입니다.
+      let result = {};
+
+      await Promise.all(
+        req.files.map(async (v, i) => {
+          const saveFileName = req.files[i].filename; // 저장된 파일명​
+          const saveFilePath = `http://localhost:5001/uploads/${saveFileName}`; // 업로드된 파일의 경로 (index.html 기준)
+          const newImage = {
+            userId: req.currentUserId,
+            projectId,
+            saveFileName,
+            saveFilePath,
+          };
+          const newImageContent = await galleryService.addImagePortfolio(
+            newImage
+          );
+
+          if (newImageContent.errorMessage) {
+            throw new Error(newImageContent.errorMessage);
+          }
+          result[i] = newImageContent;
+        })
+      );
+
+      console.log(result);
+      res.status(201).json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+galleryRouter.delete(
+  "/portfolio/gallery/:projectId/:id",
+  async function (req, res, next) {
+    try {
+      const imageId = req.params.id;
+      const projectId = req.params.projectId;
+      const result = await galleryService.deleteImagePortfolio({
+        projectId,
+        imageId,
+      });
+
+      if (result.errorMessage) {
+        throw new Error(result.errorMessage);
+      }
+
+      res.status(200).send(result.status);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+galleryRouter.post(
   "/gallery/create",
-  upload.single("gallery"),
+  upload.array("gallery"),
   async function (req, res, next) {
     try {
       if (is.emptyObject(req.body)) {
@@ -32,11 +93,11 @@ galleryRouter.post(
       // req (request) 에서 데이터 가져오기
       const { userId, description } = req.body;
 
-    // req.file 은 `gallery` 라는 필드의 파일 정보입니다.
-    const saveFileName = req.file.filename; // 저장된 파일명​ 
-    const saveFilePath = `http://localhost:5001/uploads/${saveFileName}`; // 업로드된 파일의 경로 (index.html 기준)
-    
-    const newImage = { userId, description, saveFileName, saveFilePath };
+      // req.file 은 `gallery` 라는 필드의 파일 정보입니다.
+      const saveFileName = req.file.filename; // 저장된 파일명​
+      const saveFilePath = `http://localhost:5001/uploads/${saveFileName}`; // 업로드된 파일의 경로 (index.html 기준)
+
+      const newImage = { userId, description, saveFileName, saveFilePath };
 
       const newImageContent = await galleryService.addImageContent(newImage);
 

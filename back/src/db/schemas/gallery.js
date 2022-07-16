@@ -6,6 +6,9 @@ const gallerySchema = new Schema(
         type: String,
         required: true,
       },
+    projectId : {
+        type : String,
+    },
     userId: {
         type: String,
         required: true,
